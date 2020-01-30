@@ -1,0 +1,235 @@
+#include <stdio.h>
+#include <conio.h>
+#include <stdlib.h>
+
+void addatend(void);
+void addatbegin(void);
+void addinmiddle(void);
+int length(void);
+void delete(void);
+void reverse(void);
+void display(void);
+
+struct node
+{
+    int data;
+    struct node* link;
+    
+};
+int len;
+struct node*root=NULL;
+
+void main()
+{
+    int choice;
+    while(1)
+    {
+        printf("\n1.add at end\n");
+        printf("2.add at begining\n");
+        printf("3.length\n");
+        printf("4.delete\n");
+        printf("5.add in middle\n");
+        printf("6.reverse\n");
+        printf("7. display\n");
+        printf("8.Quit");
+        printf("\n\nenter your choice=");
+        scanf("%d",&choice);
+        switch(choice)
+        {
+            case 1: addatend();
+            break;
+            case 2: addatbegin();
+            break;
+            case 3: len=length();
+            printf("length=%d",len);
+            break;
+            case 4: addinmiddle();
+            break;
+            case 5: delete();
+            break;
+            case 6: reverse();
+            break;
+            case 7: display();
+            break;
+            case 8: exit(1);
+            default: printf("\nInvalid choice");
+        }
+    }
+    getch();
+}
+
+
+
+ void addatend()
+ {
+     struct node* temp;
+     temp=(struct node*)malloc(sizeof(struct node));
+     printf("enter the data element");
+     scanf("%d",&temp->data);
+     temp->link=NULL;
+     if(root==NULL)
+     {
+         root=temp;
+     }
+     else
+     {
+         struct node*p;
+         p=root;
+         while(p->link!=NULL)
+         {
+             p=p->link;
+         }
+        p->link=temp; 
+     }
+ 
+     getch();
+ }
+
+
+void addatbegin()
+{
+ struct node* temp;
+ temp=(struct node*)malloc(sizeof(struct node));
+ printf("\n enter data element=");
+ scanf("%d",&temp->data);
+ temp->link=NULL;
+ if(root==NULL)
+ {
+     root=temp;
+ }
+ else
+ {
+     temp->link=root;
+     root=temp;
+ }
+ getch();
+}
+
+
+length()
+{
+    int count=0;
+    struct node* temp;
+    temp=root;
+    while(temp!=NULL)
+    {
+        count++;
+        temp=temp->link;
+    }
+    return count;
+}
+
+
+void addinmiddle()
+{
+   int loc=length();
+    int i=1,len;
+    
+    struct node*p;
+    if (loc>len)
+    {
+        printf("\nInvalid location");
+    }
+    else
+    {
+        p=root;
+        while(i<loc)
+        {
+            p=p->link;
+            i++;
+        }
+    struct node* temp;
+    temp=(struct node*)malloc(sizeof(struct node));
+    printf("\n enter data element=");
+    scanf("%d",&temp->data);
+    temp->link=NULL;
+    temp->link=p->link;
+    p->link=temp;
+    }
+getch();
+}
+
+void delete()
+{
+    int loc;
+    int len=length();
+    struct node*temp;
+    printf("enter location to delete=");
+    scanf("%d",&loc);
+    if(loc>len)
+    {
+        printf("\nInvalid location");
+    }
+    else if(loc==1)
+    {
+        temp=root;
+        root=temp->link;
+        temp->link=NULL;
+        free(temp);
+    }
+    else if(loc>1)
+    {
+        int i=1;
+        struct node*temp,*p=root;
+        while(i<loc-1)
+        {
+            p=p->link;
+            i++;
+        }
+        temp=p->link;
+        p->link=temp->link;
+        temp->link=NULL;
+        free(temp);
+    }
+    
+
+    getch();
+}
+
+void reverse()
+{
+    len=length();
+    struct node*p;
+    struct node*q;
+    struct node*temp;
+    int len,i=0,k=0,j=len-1;
+   
+    p=q=root;
+    while(i<j)
+    {
+        k=0;
+        while(k<j)
+        {
+            q=q->link;
+            k++;
+        }
+            temp=p->data;
+            p->data=q->data;
+            q->data=temp;
+            i++;
+            j--;
+            p=p->link;
+            q=root;
+    }
+        
+}
+void display()
+{
+    struct node* temp;
+    if(root==NULL)
+    {
+        printf("Linked list is empty");
+    }
+    else
+    {
+        temp=root;
+        while(temp!=NULL)
+        {
+        printf("%d-->",temp->data);
+        temp=temp->link;
+        }
+        printf("\n\n\n");
+    }
+    
+}
+
